@@ -16,49 +16,21 @@ OVFTOOl42=VMware-ovftool-4.2.0-4586971-lin.x86_64.bundle
 
 #### ---- Install Package Dependencies ---- ####
 
-apt-get update && \
-apt-get install -yq --no-install-recommends \
-build-essential \
-gcc \
-gcc-multilib \
-uuid \
-uuid-dev \
-perl \
-libxml-libxml-perl \
-perl-doc \
-libssl-dev \
-e2fsprogs \
-libarchive-zip-perl \
-libcrypt-ssleay-perl \
-libclass-methodmaker-perl \
-libdata-dump-perl \
-libsoap-lite-perl \
-git \
-expect \
-python \
-python-setuptools \
-python-dev \
-python-pip \
-python-virtualenv \
-ruby-full \
-make \
-unzip \
-gem \
-software-properties-common \
-default-jre \
-iputils-ping \
-module-init-tools \
-curl \
-libcurl3 \
-libunwind8 \
-libicu55 \
-wget \
-vim && \
-apt-get clean && \
-rm -rf /var/lib/apt/lists/* /var/tmp/*
+###
+#rm -rf /var/cache/yum
+#yum clean all 
+#yum update -y
 
-gem install savon
-pip install --upgrade pip
+#yum install -y gcc curl wget git expect make automake \
+#unzip ruby rubygems perl uuid iputils vim make \
+#python python-pip python-setuptools python-virtual kmod \
+#gunzip kernel-headers kernel-devel
+
+#yum clean all
+#rm -rf /var/cache/yum
+
+#gem install savon
+#pip install --upgrade pip
 
 #### ---- Install vSphere CLI/SDK for Perl 6.5 ---- ####
 
@@ -133,9 +105,10 @@ cp /root/vsan-sdk-ruby/bindings/*.rb /root/vsan-sdk-ruby/samplecode
 #### ---- PowerCLI Core 1.0 ---- ####
 
 wget https://download3.vmware.com/software/vmw-tools/powerclicore/PowerCLI_Core.zip -P /tmp/
-curl -sLO https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-alpha.12/powershell_6.0.0-alpha.12-1ubuntu1.16.04.1_amd64.deb
-dpkg -i /root/powershell_6.0.0-alpha.12-1ubuntu1.16.04.1_amd64.deb && \
-rm -f /root/powershell_6.0.0-alpha.12-1ubuntu1.16.04.1_amd64.deb && \
+curl -sLO https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-beta.7/powershell-6.0.0_beta.7-1.el7.x86_64.rpm
+rpm -ivh /root/powershell-6.0.0_beta.7-1.el7.x86_64.rpm && \
+rm -f /root/powershell-6.0.0_beta.7-1.el7.x86_64.rpm && \
+
 unzip /tmp/PowerCLI_Core.zip -d /root/powershell && rm -f /tmp/PowerCLI_Core.zip && \
 mkdir -p /root/.config/powershell/ && mkdir -p /root/.local/share/powershell/Modules && \
 unzip /root/powershell/PowerCLI.ViCore.zip -d /root/.local/share/powershell/Modules && \
@@ -181,12 +154,3 @@ git clone https://github.com/lamw/powerclicore-docker-container-samples /root/sc
 git clone https://github.com/lamw/vghetto-scripts /root/script-repos/vghetto-scripts
 git clone https://github.com/lamw/pyvmomi-community-samples /root-script-repos/pyvmomi-community-samples
 
-
-# apt-get remove all shit
-apt-get -y purge build-essential \
-gcc \
-gcc-multilib
-
-apt-get autoremove -y
-apt-get clean
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

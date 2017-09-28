@@ -1,5 +1,5 @@
-FROM ubuntu:16.04
-MAINTAINER renoufa@vmware.com
+FROM centos:latest
+MAINTAINER matt@mty.net.au
 
 # Updated to all vSphere 6.5 tools by @lamw
 WORKDIR /root
@@ -17,7 +17,7 @@ ARG VSAN65_SDK_PYTHON=vsan-sdk-65-python-4602587.zip
 ARG VSAN65_SDK_JAVA=vsan-sdk-65-java-4602587.zip
 ARG VSAN65_SDK_PERL=vsan-sdk-65-perl-4602587.zip
 ARG VDDK65=VMware-vix-disklib-6.5.0-4604867.x86_64.tar.gz
-ARG OVFTOOl42=VMware-ovftool-4.2.0-4586971-lin.x86_64.bundle
+ARG OVFTOOl42=VMware-ovftool-4.2.0-5965791-lin.x86_64.bundle
 ARG VMWARE_UTILS_INSTALLER=vmware-utils-install.sh
 
 ADD [ \
@@ -36,6 +36,15 @@ ADD [ \
   "$VMWARE_UTILS_INSTALLER", \
   "/tmp/" \
 ]
+
+
+RUN yum clean all 
+
+RUN yum update -y
+
+RUN yum install -y gcc curl wget git expect make automake unzip ruby rubygems perl uuid iputils vim make python python-pip python-setuptools python-virtual kmod gunzip kernel-headers kernel-devel bind-utils
+
+RUN yum clean all
 
 RUN /tmp/$VMWARE_UTILS_INSTALLER
 
